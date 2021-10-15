@@ -23,7 +23,7 @@ project/*.dep
 project/RTE/*
 project/Objects/*
 project/Listings/*
-tools/jscope.jscope
+
 
 # Listing files
 *.cod
@@ -75,7 +75,7 @@ tools/jscope.jscope
 *.lnp
 *.orc
 # define exception below if needed
-*.pack
+
 # define exception below if needed
 *.pdsc
 *.plg
