@@ -244,7 +244,7 @@ uint8_t frskyUpdate(void)
             // AETR channel order
       state.rx.axis[0] = (rcData[0] - 1500);
       state.rx.axis[1] = (rcData[1] - 1500);
-      state.rx.axis[2] = -(rcData[3] - 1500);
+      state.rx.axis[2] = (rcData[3] - 1500);
       state.rx.axis[3] = rcData[2] - 1000;
 
       for (int i = 0; i < 3; i++) {

@@ -267,36 +267,8 @@ void motor_mixer_calc(float mix[4]) {
   flags.motortest_override = 1;
 #endif
 
-  if (rx_aux_on(AUX_MOTORS_TO_THROTTLE_MODE) || flags.motortest_override || flags.controls_override) {
-    // TODO: investigate how skipping all that code below affects looptime
+
     {
-      // motor test mode, we set mix according to sticks
-      if (state.rx_filtered.roll < -0.5f || state.rx_filtered.pitch < -0.5f) {
-        mix[MOTOR_FR] = 0;
-      } else {
-        mix[MOTOR_FR] = state.throttle;
-      }
-
-      if (state.rx_filtered.roll > 0.5f || state.rx_filtered.pitch < -0.5f) {
-        mix[MOTOR_FL] = 0;
-      } else {
-        mix[MOTOR_FL] = state.throttle;
-      }
-
-      if (state.rx_filtered.roll < -0.5f || state.rx_filtered.pitch > 0.5f) {
-        mix[MOTOR_BR] = 0;
-      } else {
-        mix[MOTOR_BR] = state.throttle;
-      }
-
-      if (state.rx_filtered.roll > 0.5f || state.rx_filtered.pitch > 0.5f) {
-        mix[MOTOR_BL] = 0;
-      } else {
-        mix[MOTOR_BL] = state.throttle;
-      }
-    }
-
-  } else {
     // normal mode, we set mix according to pidoutput
 
 #ifdef INVERTED_ENABLE
@@ -311,10 +283,10 @@ void motor_mixer_calc(float mix[4]) {
 #endif
     {
       // normal mixer
-      mix[MOTOR_FR] = state.throttle + state.pidoutput.axis[ROLL] - state.pidoutput.axis[PITCH] + state.pidoutput.axis[YAW]; // FR
-      mix[MOTOR_FL] = state.throttle - state.pidoutput.axis[ROLL] - state.pidoutput.axis[PITCH] - state.pidoutput.axis[YAW]; // FL
-      mix[MOTOR_BR] = state.throttle + state.pidoutput.axis[ROLL] + state.pidoutput.axis[PITCH] - state.pidoutput.axis[YAW]; // BR
-      mix[MOTOR_BL] = state.throttle - state.pidoutput.axis[ROLL] + state.pidoutput.axis[PITCH] + state.pidoutput.axis[YAW]; // BL
+      mix[MOTOR_FR] = state.throttle + state.pidoutput.axis[ROLL] - state.pidoutput.axis[PITCH] - state.pidoutput.axis[YAW]; // FR
+      mix[MOTOR_FL] = state.throttle - state.pidoutput.axis[ROLL] - state.pidoutput.axis[PITCH] + state.pidoutput.axis[YAW]; // FL
+      mix[MOTOR_BR] = state.throttle + state.pidoutput.axis[ROLL] + state.pidoutput.axis[PITCH] + state.pidoutput.axis[YAW]; // BR
+      mix[MOTOR_BL] = state.throttle - state.pidoutput.axis[ROLL] + state.pidoutput.axis[PITCH] - state.pidoutput.axis[YAW]; // BL
     }
 
     for (int i = 0; i <= 3; i++) {

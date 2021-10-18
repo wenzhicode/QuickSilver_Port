@@ -203,9 +203,9 @@ static float calc_bf_rates(int axis) {
 void input_rates_calc(float rates[]) {
   // high-low rates switch
   float rate_multiplier = 1.0;
-  if (rx_aux_on(AUX_HIGH_RATES) <= 0) {
-    rate_multiplier = profile_rate.low_rate_mulitplier;
-  }
+//  if (rx_aux_on(AUX_HIGH_RATES) <= 0) {
+//    rate_multiplier = profile_rate.low_rate_mulitplier;
+//  }
 
   if (profile_rate.mode == RATE_MODE_BETAFLIGHT) {
     rates[0] = rate_multiplier * calc_bf_rates(0);

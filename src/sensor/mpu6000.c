@@ -197,8 +197,8 @@ void mpu6000_readGyro(void)
 
     mpu6000_readRegs(MPU_RA_ACCEL_XOUT_H, 14, buf);
 
-    accelraw[1] = (int16_t)((buf[0] << 8) | buf[1]);
-    accelraw[0] = (int16_t)((buf[2] << 8) | buf[3]);
+    accelraw[0] = (int16_t)((buf[0] << 8) | buf[1]);
+    accelraw[1] = -(int16_t)((buf[2] << 8) | buf[3]);
     accelraw[2] = -(int16_t)((buf[4] << 8) | buf[5]);
 
     accelraw[0] =accelraw[0] - accelcal[0];
@@ -210,7 +210,7 @@ void mpu6000_readGyro(void)
     //gyro
     gyronew[1] = (int16_t)((buf[8] << 8) | buf[9]);
     gyronew[0] = (int16_t)((buf[10] << 8) | buf[11]);
-    gyronew[2] = -(int16_t)((buf[12] << 8) | buf[13]);
+    gyronew[2] = (int16_t)((buf[12] << 8) | buf[13]);
 
 
     gyronew[0] = gyronew[0] - gyrocal[0];
@@ -284,9 +284,9 @@ void gyro_cal(void)
 
         mpu6000_readRegs(MPU_RA_GYRO_XOUT_H, 6, data);
 
-        gyro[1] = (int16_t)((data[0] << 8) + data[1]);
-        gyro[0] = (int16_t)((data[2] << 8) + data[3]);
-        gyro[2] = (int16_t)((data[4] << 8) + data[5]);
+        gyronew[1] = (int16_t)((data[0] << 8) | data[1]);
+        gyronew[0] = (int16_t)((data[2] << 8) | data[3]);
+        gyronew[2] = (int16_t)((data[4] << 8) | data[5]);
 
         for (int i = 0 ; i < 3 ; i++)
         {
@@ -330,9 +330,9 @@ void acc_cal(void)
         mpu6000_readRegs(MPU_RA_ACCEL_XOUT_H, 6, buf);
 
 
-        accelraw[0] = (int16_t)((buf[0] << 8) + buf[1]);
-        accelraw[1] = -(int16_t)((buf[2] << 8) + buf[3]);
-        accelraw[2] = -(int16_t)((buf[4] << 8) + buf[5]);
+        accelraw[0] = (int16_t)((buf[0] << 8) | buf[1]);
+        accelraw[1] = -(int16_t)((buf[2] << 8) | buf[3]);
+        accelraw[2] = -(int16_t)((buf[4] << 8) | buf[5]);
 
 
         for (int x = 0; x < 3; x++)
